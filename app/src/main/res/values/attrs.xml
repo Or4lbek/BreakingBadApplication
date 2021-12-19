@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="color0" format="color" />
+        <attr name="color1" format="color" />
+        <attr name="color2" format="color" />
+        <attr name="color3" format="color" />
+        <attr name="color4" format="color" />
+        <attr name="colorGreen" format="color" />
+        <attr name="colorBack" format="color" />
+        <attr name="colorMain" format="color" />
+        <attr name="background1" format="color" />
+        <attr name="background2" format="color" />
+        <attr name="background3" format="color" />
+    </declare-styleable>
+    <declare-styleable name="RallyLineGraphChart">
+        <attr name="barColor" format="color" />
+        <attr name="curveBorderColor" format="color" />
+        <attr name="curveFillColor" format="color" />
+        <attr name="curveTopMargin" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RallyScrollableTab">
+        <attr name="selectedColor" format="color" />
+        <attr name="unSelectedColor" format="color" />
+        <attr name="tabTextAppearance" format="reference" />
+    </declare-styleable>
+</resources>
