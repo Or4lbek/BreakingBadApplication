@@ -35,20 +35,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         handler = DBHelper(requireContext())
         session = Session(requireContext())
 
-//        var user: User? =  getUserData(session.getUserId())
-//        binding.textViewProfileMail.text = user?.email.toString()
-//        binding.textViewProfileName.text = user?.name.toString()
+        binding.textViewProfileMail.text = session.getUserId().toString()
+        binding.textViewProfileName.text = handler.readData(session.getUserId().toString())
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    fun getUserData(email:String): User? {
-//        return handler.readData(session.getUserId())
-        val cursor = handler.readData(session.getUserId())
 
-        return handler.readData(email)
-
-    }
 
     companion object {
 

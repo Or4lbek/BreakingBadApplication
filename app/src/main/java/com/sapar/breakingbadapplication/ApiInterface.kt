@@ -11,5 +11,4 @@ interface ApiInterface {
 
     @GET("characters/{char_id}")
     fun getCharacterById(@Path("char_id") char_id:Int): Call<List<CharacterItem>>
-//    Call<List<Character>> getCharacterById(@Path("char_id") Integer char_id);
 }

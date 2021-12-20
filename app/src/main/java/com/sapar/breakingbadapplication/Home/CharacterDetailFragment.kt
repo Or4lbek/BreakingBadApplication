@@ -1,6 +1,8 @@
 package com.sapar.breakingbadapplication.Home
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import com.bumptech.glide.Glide.init
 import com.sapar.breakingbadapplication.ApiInterface
 import com.sapar.breakingbadapplication.CharacterItem
 import com.sapar.breakingbadapplication.R
@@ -33,14 +36,21 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private val listViewOccupation: ListView? = null
     private var occ: List<String>? = null
     private var character: CharacterItem? = null
-
+    lateinit var prefs: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCharacterDetailBinding.bind(view)
+        init()
         getMyData()
     }
 
+    @SuppressLint("CommitPrefEdits")
+    private fun init(){
+        prefs = requireActivity().getSharedPreferences("myapp", Context.MODE_PRIVATE)
+        editor = prefs.edit()
+    }
     private fun getMyData() {
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -48,7 +58,8 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             .build()
             .create(ApiInterface::class.java)
 
-        val retrofitData = retrofitBuilder.getCharacterById(1)
+        val user_detial_id = prefs.getInt("id", 1) + 1
+        val retrofitData = retrofitBuilder.getCharacterById(user_detial_id)
 
 
 
@@ -63,7 +74,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             ) {
                 val responseBody = response.body()!![0]
                 val character:CharacterItem = responseBody as CharacterItem
-//                Toast.makeText(requireContext(),character.toString(), Toast.LENGTH_SHORT).show()
                 binding.progressBar2.visibility = View.GONE
 
                 binding.apply {
@@ -71,7 +81,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                     textViewDNick.text = character.nickname
                     textViewDDateOfBirthday.text = character.birthday
                     textViewDStatus.text = character.status
-//                    textViewCategory.text = character?.category
                     occ = character.occupation
                     val adapter =
                         ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, occ!!)
@@ -83,19 +92,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                         .into(imageViewD)
 
                 }
-////                val myStringBuilder:StringBuilder = StringBuilder()
-//                for (character in responseBody){
-////                    myStringBuilder.append(character.name)
-////                    myStringBuilder.append("\n")
-//                    charactersList.add(character)
-//                    char_id = character.char_id
-//                    name = character.name
-//                    charactersAdapter.notifyDataSetChanged()
-//                    binding.progressBar.visibility = View.GONE
-//
-//                }
-
-//                binding.textViewNames.text = myStringBuilder.toString()
             }
 
             override fun onFailure(call: Call<List<CharacterItem>>, t: Throwable) {

@@ -28,5 +28,6 @@
         android:id="@+id/characterDetailFragment"
         android:name="com.sapar.breakingbadapplication.Home.CharacterDetailFragment"
         android:label="Detailed Character"
-        tools:layout="@layout/fragment_character_detail" />
+        tools:layout="@layout/fragment_character_detail" >
+    </fragment>
 </navigation>

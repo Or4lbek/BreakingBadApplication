@@ -33,7 +33,6 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
 
@@ -56,11 +55,9 @@ class SignInFragment : Fragment() {
                 )
             Log.i("check3", checkUsersPassword.toString())
             if (checkUsersPassword) {
-//                session.setLoggedIn(true)
                 session.setLoggedIn(true)
                 Toast.makeText(context, "Sign in successful", Toast.LENGTH_SHORT).show()
                 session.setUserId(binding.editTextTextEmailAddress.text.toString())
-//                intent.putExtra("email", binding.editTextTextEmailAddress.text.toString())
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()

@@ -124,7 +124,6 @@ class SignUpFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                         session.setUserId(binding.editTextTextEmailAddress.text.toString())
-//                        intent.putExtra("email",binding.editTextTextEmailAddress.text.toString())
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                         requireActivity().finish()

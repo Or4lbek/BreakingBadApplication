@@ -2,6 +2,8 @@ package com.sapar.breakingbadapplication.Home
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,7 +25,6 @@ import java.util.ArrayList
 
 
 class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnItemNoteListener {
-
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
     private val BASE_URL:String = "https://www.breakingbadapi.com/api/"
@@ -31,7 +32,10 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
     lateinit var charactersAdapter:Adaptery
     private lateinit var linearLayoutManager: LinearLayoutManager
     var char_id: Int = 1
+
     private lateinit var name: String
+    lateinit var prefs: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +43,11 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
         init()
     }
 
+    @SuppressLint("CommitPrefEdits")
     private fun init() {
+        prefs = requireActivity().getSharedPreferences("myapp", Context.MODE_PRIVATE)
+        editor = prefs.edit()
+
         linearLayoutManager = LinearLayoutManager(context)
 
         binding.recyclerView.setLayoutManager(linearLayoutManager)
@@ -58,26 +66,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
             .create(ApiInterface::class.java)
         val retrofitData = retrofitBuilder.getData()
 
-        binding.progressBar.visibility = View.VISIBLE
-
-//        GlobalScope.launch(Dispatchers.IO){
-//            val response = retrofitBuilder.getData()
-////            val retrofitData = retrofitBuilder.getData().awaitResponse()
-//            if (response.isSuccessful){
-//                for (character in response.body()!!){
-//////                    myStringBuilder.append(character.name)
-//////                    myStringBuilder.append("\n")
-//                    charactersList.add(character)
-//                    char_id = character.char_id
-//                    name = character.name
-////
-//                }
-//            }
-//
-//        }
-//        charactersAdapter.notifyDataSetChanged()
-//        binding.progressBar.visibility = View.GONE
-
+        if (charactersList.isEmpty()){
+            binding.progressBar.visibility = View.VISIBLE
+        }
         retrofitData.enqueue(object : Callback<List<CharacterItem>> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(
@@ -86,10 +77,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
             ) {
                 val responseBody = response.body()!!
 
-//                val myStringBuilder:StringBuilder = StringBuilder()
                 for (character in responseBody){
-//                    myStringBuilder.append(character.name)
-//                    myStringBuilder.append("\n")
                     charactersList.add(character)
                     char_id = character.char_id
                     name = character.name
@@ -98,7 +86,6 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
 
                 }
 
-//                binding.textViewNames.text = myStringBuilder.toString()
             }
 
             override fun onFailure(call: Call<List<CharacterItem>>, t: Throwable) {
@@ -115,6 +102,8 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), Adaptery.OnIt
     }
 
     override fun onNoteClick(position: Int) {
+        editor.putInt("id", position)
+        editor.commit()
         val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailFragment()
         findNavController().navigate(action)
     }

@@ -1,6 +1,9 @@
 package com.sapar.breakingbadapplication.Home
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +25,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     var session: Session? = null
+    lateinit var prefs: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,7 +36,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         init()
     }
 
+    @SuppressLint("CommitPrefEdits")
     private fun init() {
+        prefs = requireActivity().getSharedPreferences("myapp", Context.MODE_PRIVATE)
+        editor = prefs.edit()
+
         session = Session((activity as MainActivity))
 
         binding.buttonLogOut.setOnClickListener {
@@ -57,15 +67,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.imageButtonChangeBcg.setOnClickListener{
-//            R.id.layout.
-//            var constraint_layout:ConstraintLayout = findViewById(R.id.record_id)
-//            constraint_layout.setBackgroundColor(resources.getColor(R.color.teal_200))
-            (activity as MainActivity).setTheme(R.style.AppThemeNight)
+            if (prefs.getBoolean("alreadyChanged", false)){
+                (activity as MainActivity).setTheme(R.style.AppThemeDay)
+                editor.putBoolean("alreadyChanged", false)
+                editor.commit()
+            }else{
+                (activity as MainActivity).setTheme(R.style.AppThemeNight)
+                editor.putBoolean("alreadyChanged", true)
+                editor.commit()
+            }
             (activity as MainActivity).goToHomeFragment()
-//            newInstance()
-//            (activity as MainActivity).goToHomeFragment()
-//            (activity as MainActivity).recreate()
-//            (activity as MainActivity).recreateFragment(this)
+
+
         }
     }
 

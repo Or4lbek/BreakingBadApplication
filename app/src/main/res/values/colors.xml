@@ -18,5 +18,7 @@
     <color name="back">#ECECEC</color>
     <color name="back2">#F7F8FC</color>
     <color name="back_night">#292D3E</color>
+    <color name="back_night2">#536872</color>
+    <color name="gray">#D3D3D3</color>
 
 </resources>

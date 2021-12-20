@@ -6,8 +6,9 @@
         android:title="@string/characters" />
 
     <item
-        android:id="@+id/item2"
-        android:title="" />
+        android:id="@+id/profileFragment2"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person"/>
 
     <item
         android:id="@+id/settingsFragment"

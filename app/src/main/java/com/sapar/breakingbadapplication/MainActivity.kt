@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
 
         handler = DBHelper(this)
-//        Toast.makeText(this, "data just ${handler.readData(email)?.name.toString()}", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -67,19 +66,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        binding.fab.setOnClickListener {
-            val action = navController.navigate(R.id.profileFragment2)
-
-//            if(binding.btnNavView.menu.getItem(0).isChecked){
-//                binding.btnNavView.menu.getItem(0).isChecked = false
-//            }
-//            else{
-//                binding.btnNavView.menu.getItem(2).isChecked = false
-//            }
-        }
 
         binding.btnNavView.background = null
-        binding.btnNavView.menu.getItem(1).isEnabled = false
+//        binding.btnNavView.menu.getItem(1).isEnabled = false
 
     }
 
@@ -87,11 +76,6 @@ class MainActivity : AppCompatActivity() {
         val action = navController.navigate(R.id.charactersFragment)
         binding.btnNavView.menu.getItem(0).isChecked = true
     }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//
-//        return navController.navigateUp() || super.onSupportNavigateUp()
-//    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
