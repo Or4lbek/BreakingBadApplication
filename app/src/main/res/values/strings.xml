@@ -26,4 +26,6 @@
     <string name="settings">Settings</string>
     <string name="characters">Characters</string>
     <string name="profile">Profile</string>
+    <string name="just_logo">just logo</string>
+    <string name="sign_in">sign in</string>
 </resources>

@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="248dp"
-        android:background="@color/back"
+        android:layout_height="255dp"
+        android:background="@color/main3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,14 +19,15 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="215dp"
-            android:layout_height="67dp"
+            android:layout_width="120dp"
+            android:contentDescription="@string/just_logo"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.327"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/main_logo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
